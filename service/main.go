@@ -3,24 +3,19 @@ package main
 import (
 	"fmt"
 
+	"github.com/eventlist/config"
 	"github.com/eventlist/service/eventsvc"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-const (
-	DBHost   = "localhost"
-	Port     = "5432"
-	DBName   = "postgres"
-	Username = "postgres"
-	Password = "example"
-)
-
 func main() {
 	// Setup Database
 	postgresConfig := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
-		DBHost, Port, DBName, Username, Password, "disable")
+		config.DBHost, config.Port,
+		config.DBName, config.Username,
+		config.Password, "disable")
 	db, err := gorm.Open("postgres", postgresConfig)
 	if err != nil {
 		panic(fmt.Sprintf("Can not create db client: %v", err))
